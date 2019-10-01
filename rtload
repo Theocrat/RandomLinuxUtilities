@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+while [ True ]
+do
+	clear
+	whead=$(w | head -n1)
+	loadcol="-1"
+	for i in {1..35}
+	do
+		wword=$(echo $whead | cut -d" " -f$i)
+		if [ "$wword" == "average:" ]
+		then
+			loadcol=$(echo $i+1 | bc)
+			break
+		fi
+	done
+	procload=$(echo $whead | cut -d" " -f"$loadcol" | cut -d"," -f1)
+	procload_x10=$(echo $procload"*10" | bc | cut -d. -f1)
+	echo -n Processor Load: \[
+	if [ $(($procload_x10)) -gt $((30)) ]
+	then
+		echo " !!!       OVERLOAD       !!! ] $procload"
+	else
+		for i in {1..30}
+		do
+			if [ $((i)) -le $(($procload_x10)) ]
+			then
+				echo -n \#
+			else
+				echo -n -
+			fi
+		done
+		echo \] $procload
+	fi
+	sleep 3
+done
