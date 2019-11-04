@@ -3,9 +3,33 @@
 from math import ceil
 from sys  import argv
 from os   import system
+args  = [] + argv
+if '--help' in args:
+    print('Image to Braille converter')
+    print('--------------------------')
+    print('Usage:')
+    print('> brailleimg [OPTIONS] FILENAME')
+    print(' ')
+    print('* FILENAME is compulsory, and must be path to an image file in the Raster image format.')
+    print('* Only one file is converted per use of the command.')
+    print('* OPTIONS must be present BEFORE the filename. Last argument must be filename.')
+    print('* If the image is a GIF, only the first frame is converted.')
+    print(' NOTE: The image is AUTOMATICALLY SCALED DOWN for viewing on mobile screens, so that it can be')
+    print('       sent via whatsapp and discord. This will greatly distort most images. To convert without resizing,')
+    print('       use the --noresize flag discussed below.')
+    print(' ')
+    print('* OPTIONS: currently, three options are supported by brailleimg.')
+    print('   1. --help:     if this option is used, brailleimg ignores all other options and prints this help.')
+    print('   2. --tofile:   if this option is used, the output is saved as a textfile. It has the .txt file extension,')
+    print('                  but otherwise inherits the name of the original image file, minus the extension.')
+    print('                  NOTE: the text file is saved in the same directory as the image file.')
+    print('   3. --noresize: if this option is used, the the input is not resized to make it compatible for viewing on a')
+    print('                  mobile screen, and therefore for sending via phones etc.')
+    print(' ')
+    exit(0)
+
 if not len(argv) in [2,3,4]:
     raise('Sorry, you must provide a (path to) an image as command-line argument.')
-args  = [] + argv
 fname = args.pop()
 
 from skimage.io    import imread, imshow, show
@@ -110,7 +134,7 @@ for r in range(0, smol.shape[0], 3):
         if array_equal(segment, matrix([[True,  True ], [False, True ], [True,  True ]]) ): text += chr(10301)
         if array_equal(segment, matrix([[False, True ], [True , True ], [True,  True ]]) ): text += chr(10302)
         if array_equal(segment, matrix([[True,  True ], [True,  True ], [True,  True ]]) ): text += chr(10303)
-    text += '\n\r'
+    text += '\n'
 print(' '*130)
 
 if '--tofile' in args:
