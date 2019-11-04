@@ -1,0 +1,101 @@
+#!/usr/bin/python3
+
+from sys     import argv, exit
+from os.path import isfile
+
+# Obtaining input stream and readying the
+# output stream in a POSIX-compliant way:
+if len(argv) < 2 or argv[1] == '-':
+    intext = input()
+else:
+    if not isfile(argv[1]):
+        raise('Error: ' + argv[1] + ' is not a file.')
+        exit(1)
+    infile = open(argv[1], 'r')
+    intext = infile.read()
+    infile.close()
+outtext = '' + intext
+
+# Required in case first letter is a vowel:
+if outtext[0] in 'aeiou':
+    outtext = '_' + outtext
+
+# Changing the aspirated consonants:
+outtext = chr(2454).join(outtext.split('kh'))
+outtext = chr(2456).join(outtext.split('gh'))
+outtext = chr(2459).join(outtext.split('ch'))
+outtext = chr(2461).join(outtext.split('jh'))
+outtext = chr(2464).join(outtext.split('Th'))
+outtext = chr(2466).join(outtext.split('Dh'))
+outtext = chr(2469).join(outtext.split('th'))
+outtext = chr(2471).join(outtext.split('dh'))
+outtext = chr(2475).join(outtext.split('ph'))
+outtext = chr(2477).join(outtext.split('bh'))
+
+# Changing the nasal consonants:
+outtext = chr(2457).join(outtext.split('ng'))
+outtext = chr(2462).join(outtext.split('nj'))
+outtext = chr(2467).join(outtext.split('N'))
+outtext = chr(2472).join(outtext.split('n'))
+outtext = chr(2478).join(outtext.split('m'))
+
+# Changing the simplest consonants:
+outtext = chr(2453).join(outtext.split('k'))
+outtext = chr(2455).join(outtext.split('g'))
+outtext = chr(2458).join(outtext.split('c'))
+outtext = chr(2460).join(outtext.split('j'))
+outtext = chr(2463).join(outtext.split('T'))
+outtext = chr(2465).join(outtext.split('D'))
+outtext = chr(2468).join(outtext.split('t'))
+outtext = chr(2470).join(outtext.split('d'))
+outtext = chr(2474).join(outtext.split('p'))
+outtext = chr(2476).join(outtext.split('b'))
+
+# Changing the vowels which are supposed to be
+# written not as symbol but in character:
+outtext = (' ' + chr(2452)).join(outtext.split(' ou'))
+outtext = chr(2452).join(outtext.split('_ou'))
+outtext = (' ' + chr(2448)).join(outtext.split(' oi'))
+outtext = chr(2448).join(outtext.split('_oi'))
+outtext = (' ' + chr(2437)).join(outtext.split(' o'))
+outtext = chr(2437).join(outtext.split('_o'))
+outtext = (' ' + chr(2438)).join(outtext.split(' a'))
+outtext = chr(2438).join(outtext.split('_a'))
+outtext = (' ' + chr(2439)).join(outtext.split(' i'))
+outtext = chr(2439).join(outtext.split('_i'))
+outtext = (' ' + chr(2441)).join(outtext.split(' u'))
+outtext = chr(2441).join(outtext.split('_u'))
+outtext = (' ' + chr(2447)).join(outtext.split(' e'))
+outtext = chr(2447).join(outtext.split('_e'))
+outtext = (' ' + chr(2442)).join(outtext.split(' U'))
+outtext = chr(2442).join(outtext.split('_U'))
+outtext = (' ' + chr(2440)).join(outtext.split(' I'))
+outtext = chr(2440).join(outtext.split('_I'))
+outtext = (' ' + chr(2451)).join(outtext.split(' O'))
+outtext = chr(2451).join(outtext.split('_O'))
+
+# Changing the vowels which are supposed to be
+# written not as symbol but in character:
+outtext = chr(2508).join(outtext.split('ou'))
+outtext = chr(2504).join(outtext.split('oi'))
+outtext =        ''.join(outtext.split('o'))
+outtext = chr(2494).join(outtext.split('a'))
+outtext = chr(2495).join(outtext.split('i'))
+outtext = chr(2497).join(outtext.split('u'))
+outtext = chr(2503).join(outtext.split('e'))
+outtext = chr(2498).join(outtext.split('U'))
+outtext = chr(2496).join(outtext.split('I'))
+outtext = chr(2507).join(outtext.split('O'))
+
+# Taking the y-r-l--s-sh-sh-h:
+outtext = chr(2486).join(outtext.split('sh'))
+outtext = chr(2487).join(outtext.split('Sh'))
+outtext = (chr(2479) + chr(2492)).join(outtext.split('y'))
+outtext = chr(2479).join(outtext.split('Y'))
+outtext = chr(2480).join(outtext.split('r'))
+outtext = chr(2482).join(outtext.split('l'))
+outtext = chr(2488).join(outtext.split('s'))
+outtext = chr(2489).join(outtext.split('h'))
+outtext = (chr(2465) + chr(2492)).join(outtext.split('R'))
+
+print(outtext)
