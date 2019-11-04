@@ -1,0 +1,123 @@
+#!/usr/bin/python3
+
+from math import ceil
+from sys  import argv
+from os   import system
+if not len(argv) in [2,3,4]:
+    raise('Sorry, you must provide a (path to) an image as command-line argument.')
+args  = [] + argv
+fname = args.pop()
+
+from skimage.io    import imread, imshow, show
+from skimage.color import rgb2grey
+img = imread(fname)
+img = rgb2grey(img)
+
+# Safe size: 25 x 25
+
+# Resizing the image to 25x25 while retaining most of it:
+
+rows = img.shape[0]
+cols = img.shape[1]
+scale_H = ceil(cols / 50)
+scale_V = ceil(rows / 51)
+
+if not ('--noresize' in args):
+    smol = img[::scale_H,::scale_V]
+else:
+    smol = img
+
+
+# Thresholding the image:
+from numpy import matrix, array_equal
+
+smol = smol > smol.mean()
+#exit(0)
+text = ''
+for r in range(0, smol.shape[0], 3):
+    for c in range(0, smol.shape[1], 2):
+        segment = smol[r:r+3, c:c+2]
+        percent = round((r * 100) / smol.shape[0])
+        print('Progress: [' + '#'*percent + '-'*(100-percent) + ']', end='\r')
+        if array_equal(segment, matrix([[False, False], [False, False], [False, False]]) ): text += chr(10240)
+        if array_equal(segment, matrix([[True,  False], [False, False], [False, False]]) ): text += chr(10241)
+        if array_equal(segment, matrix([[False, False], [True , False], [False, False]]) ): text += chr(10242)
+        if array_equal(segment, matrix([[True,  False], [True,  False], [False, False]]) ): text += chr(10243)
+        if array_equal(segment, matrix([[False, False], [False, False], [True,  False]]) ): text += chr(10244)
+        if array_equal(segment, matrix([[True,  False], [False, False], [True,  False]]) ): text += chr(10245)
+        if array_equal(segment, matrix([[False, False], [True , False], [True,  False]]) ): text += chr(10246)
+        if array_equal(segment, matrix([[True,  False], [True,  False], [True,  False]]) ): text += chr(10247)
+        
+        if array_equal(segment, matrix([[False, True ], [False, False], [False, False]]) ): text += chr(10248)
+        if array_equal(segment, matrix([[True,  True ], [False, False], [False, False]]) ): text += chr(10249)
+        if array_equal(segment, matrix([[False, True ], [True , False], [False, False]]) ): text += chr(10250)
+        if array_equal(segment, matrix([[True,  True ], [True,  False], [False, False]]) ): text += chr(10251)
+        if array_equal(segment, matrix([[False, True ], [False, False], [True,  False]]) ): text += chr(10252)
+        if array_equal(segment, matrix([[True,  True ], [False, False], [True,  False]]) ): text += chr(10253)
+        if array_equal(segment, matrix([[False, True ], [True , False], [True,  False]]) ): text += chr(10254)
+        if array_equal(segment, matrix([[True,  True ], [True,  False], [True,  False]]) ): text += chr(10255)
+        
+        if array_equal(segment, matrix([[False, False], [False, True ], [False, False]]) ): text += chr(10256)
+        if array_equal(segment, matrix([[True,  False], [False, True ], [False, False]]) ): text += chr(10257)
+        if array_equal(segment, matrix([[False, False], [True , True ], [False, False]]) ): text += chr(10258)
+        if array_equal(segment, matrix([[True,  False], [True,  True ], [False, False]]) ): text += chr(10259)
+        if array_equal(segment, matrix([[False, False], [False, True ], [True,  False]]) ): text += chr(10260)
+        if array_equal(segment, matrix([[True,  False], [False, True ], [True,  False]]) ): text += chr(10261)
+        if array_equal(segment, matrix([[False, False], [True , True ], [True,  False]]) ): text += chr(10262)
+        if array_equal(segment, matrix([[True,  False], [True,  True ], [True,  False]]) ): text += chr(10263)
+        
+        if array_equal(segment, matrix([[False, True ], [False, True ], [False, False]]) ): text += chr(10264)
+        if array_equal(segment, matrix([[True,  True ], [False, True ], [False, False]]) ): text += chr(10265)
+        if array_equal(segment, matrix([[False, True ], [True , True ], [False, False]]) ): text += chr(10266)
+        if array_equal(segment, matrix([[True,  True ], [True,  True ], [False, False]]) ): text += chr(10267)
+        if array_equal(segment, matrix([[False, True ], [False, True ], [True,  False]]) ): text += chr(10268)
+        if array_equal(segment, matrix([[True,  True ], [False, True ], [True,  False]]) ): text += chr(10269)
+        if array_equal(segment, matrix([[False, True ], [True , True ], [True,  False]]) ): text += chr(10270)
+        if array_equal(segment, matrix([[True,  True ], [True,  True ], [True,  False]]) ): text += chr(10271)
+        
+        if array_equal(segment, matrix([[False, False], [False, False], [False, True ]]) ): text += chr(10272)
+        if array_equal(segment, matrix([[True,  False], [False, False], [False, True ]]) ): text += chr(10273)
+        if array_equal(segment, matrix([[False, False], [True , False], [False, True ]]) ): text += chr(10274)
+        if array_equal(segment, matrix([[True,  False], [True,  False], [False, True ]]) ): text += chr(10275)
+        if array_equal(segment, matrix([[False, False], [False, False], [True,  True ]]) ): text += chr(10276)
+        if array_equal(segment, matrix([[True,  False], [False, False], [True,  True ]]) ): text += chr(10277)
+        if array_equal(segment, matrix([[False, False], [True , False], [True,  True ]]) ): text += chr(10278)
+        if array_equal(segment, matrix([[True,  False], [True,  False], [True,  True ]]) ): text += chr(10279)
+        
+        if array_equal(segment, matrix([[False, True ], [False, False], [False, True ]]) ): text += chr(10280)
+        if array_equal(segment, matrix([[True,  True ], [False, False], [False, True ]]) ): text += chr(10281)
+        if array_equal(segment, matrix([[False, True ], [True , False], [False, True ]]) ): text += chr(10282)
+        if array_equal(segment, matrix([[True,  True ], [True,  False], [False, True ]]) ): text += chr(10283)
+        if array_equal(segment, matrix([[False, True ], [False, False], [True,  True ]]) ): text += chr(10284)
+        if array_equal(segment, matrix([[True,  True ], [False, False], [True,  True ]]) ): text += chr(10285)
+        if array_equal(segment, matrix([[False, True ], [True , False], [True,  True ]]) ): text += chr(10286)
+        if array_equal(segment, matrix([[True,  True ], [True,  False], [True,  True ]]) ): text += chr(10287)
+        
+        if array_equal(segment, matrix([[False, False], [False, True ], [False, True ]]) ): text += chr(10288)
+        if array_equal(segment, matrix([[True,  False], [False, True ], [False, True ]]) ): text += chr(10289)
+        if array_equal(segment, matrix([[False, False], [True , True ], [False, True ]]) ): text += chr(10290)
+        if array_equal(segment, matrix([[True,  False], [True,  True ], [False, True ]]) ): text += chr(10291)
+        if array_equal(segment, matrix([[False, False], [False, True ], [True,  True ]]) ): text += chr(10292)
+        if array_equal(segment, matrix([[True,  False], [False, True ], [True,  True ]]) ): text += chr(10293)
+        if array_equal(segment, matrix([[False, False], [True , True ], [True,  True ]]) ): text += chr(10294)
+        if array_equal(segment, matrix([[True,  False], [True,  True ], [True,  True ]]) ): text += chr(10295)
+        
+        if array_equal(segment, matrix([[False, True ], [False, True ], [False, True ]]) ): text += chr(10296)
+        if array_equal(segment, matrix([[True,  True ], [False, True ], [False, True ]]) ): text += chr(10297)
+        if array_equal(segment, matrix([[False, True ], [True , True ], [False, True ]]) ): text += chr(10298)
+        if array_equal(segment, matrix([[True,  True ], [True,  True ], [False, True ]]) ): text += chr(10299)
+        if array_equal(segment, matrix([[False, True ], [False, True ], [True,  True ]]) ): text += chr(10300)
+        if array_equal(segment, matrix([[True,  True ], [False, True ], [True,  True ]]) ): text += chr(10301)
+        if array_equal(segment, matrix([[False, True ], [True , True ], [True,  True ]]) ): text += chr(10302)
+        if array_equal(segment, matrix([[True,  True ], [True,  True ], [True,  True ]]) ): text += chr(10303)
+    text += '\n\r'
+print(' '*130)
+
+if '--tofile' in args:
+    fname = fname.split('.')[0] + '.txt'
+    fobj  = open(fname, 'w')
+    fobj.write(text)
+    fobj.close()
+    print('Complete! File saved as:', fname)
+else:
+    print(text)
