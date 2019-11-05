@@ -27,6 +27,6 @@ pip3 install --user scikit-image
 *NOTE: `bangla` is not a complete script. I will update the README.md after adding more to it.*
 
 #### TODO:
-  [ ] complete the script Bangla - add *juktakkhor*.
-  [ ] implement BASH colors into brailleimg
-  [ ] write a --help option for rtload
+  [ ] complete the script Bangla - add *juktakkhor*.  
+  [ ] implement BASH colors into brailleimg  
+  [ ] write a --help option for rtload  
