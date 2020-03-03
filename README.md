@@ -26,6 +26,10 @@ pip3 install --user scikit-image
 
 *NOTE: `bangla` is not a complete script. I will update the README.md after adding more to it.*
 
+### CSView
+
+The file `csview` is a simple utility for viewing CSV files in neatly formatted tables inside the terminal. It runs on Python3. Just place the file inside your `PATH` and make sure that your Python3 is located in `/usr/bin/`. You can check this using `which python3`. If Python3 is located somewhere else, modify the first line of this file to the address of Python3, which is printed as the output of the `which python3` command.
+
 #### TODO:
   [ ] complete the script Bangla - add *juktakkhor*.  
   [ ] implement BASH colors into brailleimg  
