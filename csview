@@ -1,0 +1,41 @@
+#!/usr/bin/python3
+
+from os import system
+debug = lambda s: system('echo "\\e[36m' + s + '\\e[0m"')
+#debug('testing debug')
+
+from sys import argv
+if len(argv) != 2:
+    print("csview needs exactly one argument, which is the name of a CSV file.")
+    exit(1)
+fname = argv[1]
+
+delim = ','
+with open(fname) as csvtext:
+    table = csvtext.read()
+rows = [list(row.split(delim)) for row in table.split('\n')]
+
+ncols = len(rows[0])
+#debug(str(ncols))
+colwidths = {}
+
+for i in range(len(rows)):
+    for j in range(ncols):
+        if len(rows[i]) == 1: break
+        if j in colwidths:
+            #debug(str(rows[i]))
+            if len(rows[i][j]) > colwidths[j]:
+                colwidths[j] = len(rows[i][j])
+        else:
+            colwidths[j] = len(rows[i][j])
+
+def extend(s, n):
+    S = s + ''
+    while len(S) < n: S += ' '
+    return S
+
+for i in range(len(rows)):
+    if len(rows[i]) == 1: break
+    for j in range(ncols):
+        print( extend( rows[i][j], colwidths[j] ), end="\t")
+    print('')
